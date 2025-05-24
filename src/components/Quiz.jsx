@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import QUESTIONS from "../questions";
 import quizCompletedImage from "../assets/quiz-complete.png";
 import QuestionTimer from "./QuestionTimer";
@@ -6,6 +6,7 @@ import QuestionTimer from "./QuestionTimer";
 const TIMEOUT = 10000; // 10 seconds
 
 export default function Quiz() {
+  const shuffledAnswers = useRef();
   const [answeredState, setAnsweredState] = useState("");
   const [userAnswers, setUserAnswers] = useState([]);
 
@@ -58,9 +59,13 @@ export default function Quiz() {
     );
   }
 
-  const shuffledAnswers = [...QUESTIONS[activeQuestionIndex].answers];
-  shuffledAnswers.sort(() => Math.random() - 0.5);
-
+  if (!shuffledAnswers.current) {
+    // If shuffledAnswers.current is not set, we need to shuffle the answers for the current question.
+    // If shuffledAnswers.current is set, we don't need to shuffle the answers again.
+    // This says: "Only shuffle the answers if they are not already shuffled."
+    shuffledAnswers.current = [...QUESTIONS[activeQuestionIndex].answers];
+    shuffledAnswers.current.sort(() => Math.random() - 0.5);
+  }
   return (
     <div id="quiz">
       <div id="question">
@@ -71,7 +76,7 @@ export default function Quiz() {
         />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
         <ul id="answers">
-          {shuffledAnswers.map((answer) => {
+          {shuffledAnswers.current.map((answer) => {
             const isSelected = userAnswers[userAnswers.length - 1] === answer;
             let cssClass = "";
 
