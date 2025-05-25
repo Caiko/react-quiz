@@ -1,12 +1,12 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import QUESTIONS from "../questions";
 import quizCompletedImage from "../assets/quiz-complete.png";
 import QuestionTimer from "./QuestionTimer";
+import Answers from "./Answers";
 
 const TIMEOUT = 10000; // 10 seconds
 
 export default function Quiz() {
-  const shuffledAnswers = useRef();
   const [answeredState, setAnsweredState] = useState("");
   const [userAnswers, setUserAnswers] = useState([]);
 
@@ -59,13 +59,6 @@ export default function Quiz() {
     );
   }
 
-  if (!shuffledAnswers.current) {
-    // If shuffledAnswers.current is not set, we need to shuffle the answers for the current question.
-    // If shuffledAnswers.current is set, we don't need to shuffle the answers again.
-    // This says: "Only shuffle the answers if they are not already shuffled."
-    shuffledAnswers.current = [...QUESTIONS[activeQuestionIndex].answers];
-    shuffledAnswers.current.sort(() => Math.random() - 0.5);
-  }
   return (
     <div id="quiz">
       <div id="question">
@@ -75,34 +68,12 @@ export default function Quiz() {
           onTimeout={() => handleSelectAnswer(null)} // causes a rerender in useEffect
         />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-        <ul id="answers">
-          {shuffledAnswers.current.map((answer) => {
-            const isSelected = userAnswers[userAnswers.length - 1] === answer;
-            let cssClass = "";
-
-            if (answeredState === "answered" && isSelected) {
-              cssClass = "selected";
-            }
-
-            if (
-              (answeredState === "correct" || answeredState === "wrong") &&
-              isSelected
-            ) {
-              cssClass = answeredState;
-            }
-
-            return (
-              <li key={answer} className="answer">
-                <button
-                  onClick={() => handleSelectAnswer(answer)}
-                  className={cssClass}
-                >
-                  {answer}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <Answers
+          answers={QUESTIONS[activeQuestionIndex].answers}
+          selectedAnswer={userAnswers[userAnswers.length - 1]}
+          answeredState={answeredState}
+          onSelect={handleSelectAnswer}
+        />
       </div>
     </div>
   );
