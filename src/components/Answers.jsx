@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Answers({
   answers,
@@ -14,10 +14,11 @@ export default function Answers({
     shuffledAnswers.current = [...answers];
     shuffledAnswers.current.sort(() => Math.random() - 0.5);
   }
+  var foo = 1;
   return (
     <ul id="answers">
       {shuffledAnswers.current.map((answer) => {
-        const isSelected = userAnswers[userAnswers.length - 1] === answer;
+        const isSelected = selectedAnswer === answer;
         let cssClass = "";
 
         if (answeredState === selectedAnswer && isSelected) {

@@ -65,7 +65,7 @@ export default function Quiz() {
         <QuestionTimer
           key={activeQuestionIndex} // Used to force a rerender and reset the timer
           timeout={TIMEOUT}
-          onTimeout={() => handleSelectAnswer(null)} // causes a rerender in useEffect
+          onTimeout={() => handleSkipAnswer} // causes a rerender in useEffect
         />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
         <Answers
