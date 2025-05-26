@@ -28,8 +28,8 @@
 
 ## 📸 Preview
 
-![image](https://github.com/user-attachments/assets/66bd5430-ffa7-4940-84e7-b4693a9d3cdc)
-![image](https://github.com/user-attachments/assets/473fb687-da4b-4b4d-b86f-e5115d6ce800)
+![image](https://github.com/user-attachments/assets/00a81093-fcb2-490f-abb1-4031d9c428df)
+
 ![image](https://github.com/user-attachments/assets/cdb43324-d5e4-46a8-97c2-e74ea1b2ce67)
 
 
