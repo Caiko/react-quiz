@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import QUESTIONS from "../questions";
-import quizCompletedImage from "../assets/quiz-complete.png";
 import Question from "./Question";
+import Summary from "./Summary";
 
 export default function Quiz() {
   const [userAnswers, setUserAnswers] = useState([]);
@@ -31,12 +31,7 @@ export default function Quiz() {
   // We useCallback here, because everytime we call handleSkipAnswer, it will create a new function. This will cause the component to rerender. We want to avoid that.
 
   if (quizCompleted) {
-    return (
-      <div id="summary">
-        <img src={quizCompletedImage} alt="" />
-        <h2>Quiz Completed</h2>
-      </div>
-    );
+    return <Summary userAnswers={userAnswers} />;
   }
 
   return (
